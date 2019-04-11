@@ -17,9 +17,11 @@ defmodule Weather.FetchData do
     Logger.info("Fetching weather data for zipcode: #{zip_code}")
   end
 
+  @weather_url Application.get_env(:weather, :weather_url)
+
   defp city_url(city) do
     appid = System.get_env("OPEN_WEATHER_APPID")
-    "api.openweathermap.org/data/2.5/forecast?q=#{city}&appid=#{appid}"
+    "#{@weather_url}/forecast?q=#{city}&appid=#{appid}"
   end
 
   defp handle_response(response) do
