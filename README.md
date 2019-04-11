@@ -1,6 +1,28 @@
 # Weather
 
-**TODO: Add description**
+This is a simple CLI programm to fetch data from the `openweathermap.org` api.
+
+## Available options
+
+`-h` or `--help` for usage tips.
+
+`-c` or `--city` to receive weather data by city.
+
+`-l` or `--latlong` to receive weather data by latitude and longitude.
+
+`-z` or `--zipcode` to receive weather data by zipcode.
+
+
+## Run with mix
+
+e.g.
+
+Get the weather in Athens, Greece.
+`mix run -e 'Weather.CLI.main(["--city", "Athens, GR"])'`
+
+`mix run -e 'Weather.CLI.main(["-l", "37.44529", "25.32872"])'`
+
+Get the weather in 
 
 ## Installation
 
