@@ -25,6 +25,11 @@ Get the weather in Athens, Greece.
 
 Get the weather in 
 
+## Run with escript
+
+Run `mix escript.build` and then from the root directory e.g. 
+`./weather -c Athens,GR`
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
