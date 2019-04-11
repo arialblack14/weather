@@ -13,7 +13,13 @@ defmodule CliTest do
     assert parse_args(["--city", "London"]) == {"London"}
   end
 
-  test "lat and long returned if -l passed" do
+  test ":zipcode returned by option parsing with -z and --zipcode options" do
+    assert parse_args(["-z", "90210"]) == {"90210"}
+    assert parse_args(["--zipcode", "90210"]) == {"90210"}
+  end
+
+  test "lat and long returned if -l and --latlong passed" do
     assert parse_args(["-l", "99.9999", "99.9999"]) == {99.9999, 99.9999}
+    assert parse_args(["--latlong", "99.9999", "99.9999"]) == {99.9999, 99.9999}
   end
 end

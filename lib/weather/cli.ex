@@ -19,24 +19,26 @@ defmodule Weather.CLI do
   """
 
   def parse_args(argv) do
+    IO.puts(argv)
+
     parse =
       OptionParser.parse(
         argv,
-        switches: [help: :boolean, city: :boolean, lat_long: :boolean, zip_code: :boolean],
-        aliases: [h: :help, c: :city, l: :lat_long, z: :zip_code]
+        switches: [help: :boolean, city: :boolean, latlong: :boolean, zipcode: :boolean],
+        aliases: [h: :help, c: :city, l: :latlong, z: :zipcode]
       )
 
     case parse do
       {[help: true], _, _} ->
         :help
 
+      {[latlong: true], [lat, long], _} ->
+        {String.to_float(lat), String.to_float(long)}
+
       {[city: true], [city], _} ->
         {city}
 
-      {[lat_long: true], [lat, long], _} ->
-        {String.to_float(lat), String.to_float(long)}
-
-      {[zip_code: true], [zip_code], _} ->
+      {[zipcode: true], [zip_code], _} ->
         {zip_code}
 
       _ ->
@@ -50,19 +52,15 @@ defmodule Weather.CLI do
     """)
   end
 
-  def process(:city, {city}) do
-    Weather.FetchData.fetch(city)
-  end
-
   def process({city}) do
-    IO.puts("CITY")
+    Weather.FetchData.fetch_by_city(city)
   end
 
   def process({lat, long}) do
-    IO.puts("LAT LONG")
+    Weather.FetchData.fetch_by_latlong(lat, long)
   end
 
   def process({zip_code}) do
-    IO.puts("ZIP CODE")
+    Weather.FetchData.fetch_by_zipcode(zip_code)
   end
 end
