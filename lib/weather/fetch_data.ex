@@ -9,10 +9,10 @@ defmodule Weather.FetchData do
     |> handle_response
   end
 
-  def fetch_by_latlong(lat, long) do
-    Logger.info("Fetching weather data for lat: #{lat} and long: #{long}")
+  def fetch_by_latlong(lat, lon) do
+    Logger.info("Fetching weather data for lat: #{lat} and lon: #{lon}")
 
-    latlong_url(lat, long)
+    latlong_url(lat, lon)
     |> HTTPoison.get()
     |> handle_response
   end
@@ -32,9 +32,9 @@ defmodule Weather.FetchData do
     "#{@weather_url}/forecast?q=#{city}&appid=#{appid}"
   end
 
-  defp latlong_url(lat, long) do
+  defp latlong_url(lat, lon) do
     appid = System.get_env("OPEN_WEATHER_APPID")
-    "#{@weather_url}/forecast?lat=#{lat}&long={long}&appid=#{appid}"
+    "#{@weather_url}/forecast?lat=#{lat}&lon=#{lon}&appid=#{appid}"
   end
 
   defp zipcode_url(zip_code) do
@@ -50,7 +50,7 @@ defmodule Weather.FetchData do
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         {:ok, "Not found..."}
 
-      {:ok, %HTTPoison.Response{status_code: _}} ->
+      {:ok, %HTTPoison.Response{status_code: _, body: _}} ->
         {:ok, "Invalid status code.''"}
 
       {:error, %HTTPoison.Error{reason: reason}} ->
