@@ -22,6 +22,19 @@ defmodule Weather.FetchData do
     "api.openweathermap.org/data/2.5/forecast?q=#{city}&appid=#{appid}"
   end
 
-  defp handle_response(%{status: 200, body: body}), do: {:ok, body}
-  defp handle_response(%{status: _, body: body}), do: {:error, body}
+  defp handle_response(response) do
+    case response do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, body}
+
+      {:ok, %HTTPoison.Response{status_code: 404}} ->
+        {:ok, "Not found..."}
+
+      {:ok, %HTTPoison.Response{status_code: _}} ->
+        {:ok, "Invalid status code.''"}
+
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:error, reason}
+    end
+  end
 end

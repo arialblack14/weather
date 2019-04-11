@@ -1,6 +1,7 @@
 # Weather
 
 This is a simple CLI programm to fetch data from the `openweathermap.org` api.
+You will need an API key to run this. Place it in your `.env` file.
 
 ## Available options
 

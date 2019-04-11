@@ -54,13 +54,25 @@ defmodule Weather.CLI do
 
   def process({city}) do
     Weather.FetchData.fetch_by_city(city)
+    |> decode_response
   end
 
   def process({lat, long}) do
     Weather.FetchData.fetch_by_latlong(lat, long)
+    |> decode_response
   end
 
   def process({zip_code}) do
     Weather.FetchData.fetch_by_zipcode(zip_code)
+    |> decode_response
+  end
+
+  defp decode_response({:ok, body}) do
+    IO.puts(body)
+  end
+
+  defp decode_response({:error, error}) do
+    IO.puts("Error fetching data from OpenWeatherMap.org...")
+    IO.puts("Error: #{error}")
   end
 end
