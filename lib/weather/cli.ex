@@ -10,6 +10,7 @@ defmodule Weather.CLI do
     |> parse_args
     |> process
     |> decode_response
+    |> extract_list
   end
 
   @doc """
@@ -65,10 +66,18 @@ defmodule Weather.CLI do
     Weather.FetchData.fetch_by_zipcode(zip_code)
   end
 
-  defp decode_response({:ok, body}), do: IO.puts(body)
+  defp decode_response({:ok, body}), do: body
 
   defp decode_response({:error, error}) do
     IO.puts("Error fetching data from OpenWeatherMap.org...")
     IO.puts("Error: #{error}")
+  end
+
+  defp extract_list(body) do
+    IO.puts("-------------------")
+    IO.puts(body)
+
+    body
+    |> get_in([:all, "list"])
   end
 end
